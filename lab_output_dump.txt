@@ -1,0 +1,196 @@
+====================================================================================================
+[1/10] Lab_Number: P1304884
+====================================================================================================
+metale_zużyciowe: w_normie
+lepkość: w_normie
+woda: w_normie
+liczba_kwasowa: w_normie
+ph: w_normie
+Overall_Interpretation:
+  Poziom metalicznych produktów zużycia w normie, świadczy o braku intensywnych procesów zużyciowych
+  oraz korozyjnych w układzie olejowym. Własności reologiczne w normie. Zawartość wody w normie.
+  Odczyn pH i liczba kwasowa w normie. Poziom dodatków uszlachetniających i i widmo IR w normie.
+  Zalecenia i wnioski: Wszystkie oznaczone parametry znajdują się w dopuszczalnym przedziale,
+  wskazują na dobrą kondycję oleju i urządzenia.  Przy zachowaniu zbliżonych warunków
+  eksploatacyjnych oraz czynności obsługowych olej kwalifikuje się do dalszej eksploatacji bez
+  podejmowania czynności korygujących. Zalecam przeprowadzić kolejne badanie oleju, w podobnym
+  zakresie, za 250h pracy.
+Overall_Assessment: 0
+Saved_Error:
+  Własności reologiczne w normie. Poziom dodatków uszlachetniających i i widmo IR w normie.
+====================================================================================================
+
+====================================================================================================
+[2/10] Lab_Number: P1400003
+====================================================================================================
+miedź: lekko_podniesiony
+lepkość: w_normie
+ph: obniżony
+liczba_kwasowa: podniesiony
+Overall_Interpretation:
+  W efekcie zużycia i/lub korozji poziom miedzi lekko podwyższony. Własności reologiczne w normie. 
+  Odczyn pH obniżony - nie krytycznie. Liczba kwasowa podwyższona. Liczba zasadowa poniżej poziomu
+  dopuszczalnego. Zalecenia i wnioski: Wymienić olej na świeży.  Dostosować częstotliwość badań
+  oleju do zaleceń wynikających z aktualnego stanu oleju  i/lub specyfikacji producenta urządzenia.
+Overall_Assessment: 2
+Saved_Error:
+  Liczba zasadowa poniżej poziomu dopuszczalnego. Własności reologiczne w normie.
+====================================================================================================
+
+====================================================================================================
+[3/10] Lab_Number: P1400044
+====================================================================================================
+miedź: lekko_podniesiony
+lepkość: w_normie
+liczba_kwasowa: krytycznie_obniżony
+Overall_Interpretation:
+  P1400044 - próbka oleju z filtra, P1400003 - próbka oleju z układu. W efekcie zużycia i/lub
+  korozji poziom miedzi lekko podwyższony. Własności reologiczne w normie. Liczba kwasowa mocno
+  podwyższona. Liczba kwasowa krytycznie obniżona. Na sączku membranowym (odfiltrowano 5ml oleju)
+  liczne zanieczyszczenia wskazujące na produkty degradacji w skutek zbyt długich czasów pracy,
+  degradacji termicznej oleju, oksydacji, niecałkowitego spalania. Zalecenia i wnioski: Zauważone
+  przez użytkownika blokowanie filtra oleju i osady na nim w odniesieniu do zbadanych własności i
+  stanu typowego oleju tej klasy nie można odnieść do wpływu zawartych parafin w oleju ponieważ
+  temp. płynięcia tego rodzaju oleju wynosi -27C i przy eksploatacji stacjonarnej silnika w układzie
+  napędu generatora energii, wytwarzania ciepła przez silnik będzie znacznie wyższa niż wartość
+  gdzie może występować blokowanie filtra z powodu parafin. W przypadku gdyby występowało
+  wydzielanie parafin z oleju( np. stała temp. oleju poniżej -10C) to pierwsze oznaki powstałyby w
+  układzie dozowania uzupełniających dolewek oleju do silnika a taki układ powinien występować w
+  tego rodzaju silniku. Na kształt osadów w oleju wg przekazanych materiałów wg zbadanych własności
+  dominujący wpływ ma poziom liczby kwasowej wskazując jako możliwe produkty utleniania oleju,
+  utleniania paliwa lub składniki spalania, które zmył olej w długotrwałej eksploatacji. Nie bez
+  wpływu na stan jakości w tym punkcie i problem z osadami na filtrze ma też czas pracy oleju i
+  sprawność filtra, który ma pewna chłonność dobraną do możliwej ilości osadów powstających w
+  silniku i czasu pracy.  W przypadku gdyby występowały w oleju parafiny osad byłby postaci jasnej
+  lub szarej w tym przypadku  osad ma barwę od ciemnobrązowej do czarnej, czyli potwierdza możliwe
+  pochodzenie z utleniania oleju, paliwa, niezupełnego spalania paliwa itp. Z uzyskanych od Państwa
+  informacji  wiemy że olej został wymieniony.  W celu niedopuszczenia do ponownej sytuacji
+  nadmiernego wydłużenia czasu pracy oleju zalecamy bezwzględnie podporządkowanie czasookresu
+  monitoringu własności fizykochemicznych oleju w odstępach 500mh, i/lub dostosować częstotliwość
+  badań oleju do zaleceń wynikających z aktualnego stanu oleju.
+Overall_Assessment: 2
+Saved_Error:
+  misleading_sample
+====================================================================================================
+
+====================================================================================================
+[4/10] Lab_Number: P1400184
+====================================================================================================
+metale_zużyciowe: w_normie
+lepkość: w_normie
+ph: w_normie
+liczba_kwasowa: w_normie
+liczba_zasadowa: obniżony
+Overall_Interpretation:
+  Poziom metalicznych produktów zużycia w normie, świadczy o braku intensywnych procesów zużyciowych
+  w układzie olejowym. Poziom sodu i krzemu na niskim poziomie świadczy o braku nieszczelności z
+  otoczenia i układu chłodzenia.   Własności reologiczne w normie.  Odczyn pH w normie. Liczba
+  kwasowa w normie. Liczba zasadowa obniżona, nie krytycznie. Zalecenia i wnioski: Ze względu na
+  obniżoną liczbę zasadowa (rezerwę alkaliczna - odpowiedzialna za neutralizację kwaśnych produktów
+  z procesów spalania i degradacji oleju) zalecamy wykonać badanie kolejnej próbki nie później niż
+  za 300rbh. W odniesieniu do wyników kolejnej próbki podjąć odpowiednie kroki eksploatacyjne.
+  Proszę wysyłać do badania min 250ml próbki.
+Overall_Assessment: 1
+Saved_Error:
+  Poziom sodu i krzemu na niskim poziomie.
+====================================================================================================
+
+====================================================================================================
+[5/10] Lab_Number: P1503652
+====================================================================================================
+miedź: podniesiony
+glikol: brak_wykrycia
+Overall_Interpretation:
+  Poziom miedzi podniesiony. Temperatura zapłonu poniżej wymagań. Nie stwierdzono  zanieczyszczenia
+  glikolem oraz olejem napędowym.  Zalecenia i wnioski:  Obserwować zmiany w następnej analizie. W
+  celu obserwacji trendu wykonać  badanie kolejnej próbki za 500h pracy.
+Overall_Assessment: 1
+Saved_Error:
+  Temperatura zapłonu poniżej wymagań. Nie stwierdzono  zanieczyszczenia   (...)  oraz olejem
+  napędowym.
+====================================================================================================
+
+====================================================================================================
+[6/10] Lab_Number: P1802071
+====================================================================================================
+pozostałe_parametry: w_normie
+płyn_chłodniczy: lekko_podniesiony
+sód: lekko_podniesiony
+Overall_Interpretation:
+  Lekko podniesiony poziom sodu - może występować jako pochodna zanieczyszczenia wodą i/lub płynem
+  chłodniczym. Pozostałe parametry w normie.   Wnioski i zalecenia: Skontrolować układ chłodzenia
+  pod kątem możliwych nieszczelności. Obserwować zmiany w następnej analizie. Wykonać kolejne
+  badanie zgodnie z przyjętym harmonogramem diagnostyki. 
+Overall_Assessment: 1
+Saved_Error:
+  note "może występować jako pochodna zanieczyszczenia wodą i/lub płynem   chłodniczym" wykryło jako
+  lekko podniesiony płyn chłodniczy - w sumie to moze dobrze?
+====================================================================================================
+
+====================================================================================================
+[7/10] Lab_Number: P1801956
+====================================================================================================
+lepkość: podniesiony
+temperatura_zapłonu: obniżony
+miedź: podniesiony
+Overall_Interpretation:
+  Oznaczona lepkość podniesiona, powyżej klasy SAE 40 - wskazuje na inny typ oleju lub zmieszanie.
+  Poziom dodatków niezgodny z referencją w naszej bazie danych. Widmo IR również wykazuje odchylenia
+  od próbki referencyjnej - bez dokładnej referencji oleju świeżego niemożliwe jest określenie
+  zawartości paliwa, glikolu oraz poziomu oksydacji w próbce. Temperatura zapłonu obniżona. Znacznie
+  podniesiony poziom miedzi - trend wzrostowy, wskazuje na zwiększone zużycie/korozję smarowanych
+  elementów zawierających w swej metalurgii ten pierwiastek.   Wnioski i zalecenia: Zalecam wzmożony
+  monitoring stanu pracy silnika oraz wykonanie kolejnego badania za ok. 250 mth pracy.Zweryfikować
+  informację dot. stosowanego oleju. Prosimy prowadzić ewidencję dot. dat wymian oraz czasu pracy
+  oleju - podając te informacje możliwe jest sporządzenie dokładniejszej interpretacji oraz wydanie
+  bardziej precyzyjnych zaleceń. 
+Overall_Assessment: 1
+Saved_Error:
+   Widmo IR również wykazuje odchylenia   od próbki referencyjnej - bez dokładnej referencji oleju
+  świeżego niemożliwe jest określenie   zawartości paliwa, glikolu oraz poziomu oksydacji w próbce.
+====================================================================================================
+
+====================================================================================================
+[8/10] Lab_Number: P1802760
+====================================================================================================
+pozostałe_parametry: w_normie
+Overall_Interpretation:
+  W porównaniu z poprzednią analizą nastąpiła poprawa temperatury krystalizacji.Nastąpiła nieznaczna
+  poprawa rezerwy alkalicznej, jednak jej wartość w dalszym ciągu jest zbyt niska.Pozostałe
+  oznaczone parametry w normie.   Zalecenia i wnioski:Należy przeprowadzić zabiegi mające na celu
+  odświeżenie płynu, zgodnie z procedurami/ zaleceniami producenta płynu i /lub wymienić płyn na
+  świeży. Wykonać badanie kolejnej próbki po przeprowadzeniu zabiegów korygujących.
+Overall_Assessment: 2
+Saved_Error:
+  W porównaniu z poprzednią analizą nastąpiła poprawa temperatury krystalizacji.Nastąpiła nieznaczna
+  poprawa rezerwy alkalicznej, jednak jej wartość w dalszym ciągu jest zbyt niska.
+====================================================================================================
+
+====================================================================================================
+[9/10] Lab_Number: P1901401
+====================================================================================================
+Overall_Interpretation:
+  Oznaczona lepkość poniżej dopuszczalnego zakresu.     Zalecenia i wnioski:  Ze względu na obniżoną
+  lepkość zalecam wymianę oleju na świeży. Proszę przysłać kolejną próbkę do badań po wykonaniu
+  działań korygujących.
+Overall_Assessment: 2
+Saved_Error:
+  Oznaczona lepkość poniżej dopuszczalnego zakresu.
+====================================================================================================
+
+====================================================================================================
+[10/10] Lab_Number: P2409187
+====================================================================================================
+metale_zużyciowe: w_normie
+ołów: podniesiony
+Overall_Interpretation:
+  Zawartość cząstek zużyciowych w normie. Wysoka zawartość ołowiu pochodzącego z paliwa lotniczego
+  jest sytuacją typową dla tłokowych silników lotniczych. Zawartość dodatków na poziomie oczekiwanym
+  dla oleju AeroShell W15W-50. Nie stwierdzono niepokojącego zanieczyszczenia oleju.  Wnioski i
+  zalecenia:  Oznaczone parametry mieszczą się w dopuszczalnych zakresach. Proszę obserwować zmiany
+  w następnej analizie zgodnie z przyjętym harmonogramem diagnostyki.
+Overall_Assessment: 0
+Saved_Error:
+  note: ołów jest podniesiony ale: Wysoka zawartość ołowiu pochodzącego z paliwa lotniczego   jest
+  sytuacją typową dla tłokowych silników lotniczych.
+====================================================================================================

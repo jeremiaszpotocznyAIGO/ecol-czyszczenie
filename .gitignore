@@ -1,0 +1,8 @@
+__pycache__
+.DS_Store
+/src/__pycache__
+*.csv
+*.xlsx
+*.json
+todo.md
+lgbm_results_to_word
