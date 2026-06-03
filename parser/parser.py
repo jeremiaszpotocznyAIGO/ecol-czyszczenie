@@ -383,8 +383,13 @@ def parse_comment_full(text: str) -> dict:
 # Endpoint do notatnika "analyze.ipynb"
 def df_to_json(df, start: int, end: int) -> dict:
     out = {}
+
     for i in range(start, end):
-        lab = str(df["Lab_Number"][i])
-        text = df["Overall_Interpretation"][i]
+        row = df.iloc[i]
+
+        lab = str(row["Lab_Number"])
+        text = row["Overall_Interpretation"]
+
         out[lab] = parse_comment(text)
+
     return out
