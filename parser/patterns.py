@@ -349,7 +349,10 @@ STATUS_RULES = [
     ("mocno_obniżony",   r"\bmocno\b.*\bobniż\w*"),
 
     ("powyżej_dopuszczalnego_limitu", r"powyżej\s+dopuszczalnego\s+limit[u]?"),
-    ("poza_dopuszczalnym_zakresem", r"poza\s+(dopuszczalnym|akceptowalnym)\s+zakres(em|ie)|nie\s+spełnia\s+wymagań"),
+    ("poza_dopuszczalnym_zakresem",
+        r"poza\s+(dopuszczalnym|akceptowalnym)\s+zakres(em|ie)"
+        r"|nie\s+spełnia\s+wymagań"
+        r"|wymaga\s+poprawy"),
     ("krytycznie_podniesiony", r"krytyczn(ie|y|a).*(podnies|podwyższ|wysok)"),
     ("krytycznie_obniżony", r"krytyczn(ie|y|a).*(obniż|niski)"),
 
@@ -357,10 +360,10 @@ STATUS_RULES = [
     ("nieznacznie_obniżony",   r"\bnieznaczn(ie|y|a)\b.*\bobniż\w*"),
 
     # "wzrósł jedynie nieznacznie" jako sygnał lekkiego wzrostu
-    ("nieznacznie_podniesiony", r"(?:jedynie\s+)?nieznaczn\w*\s+wzrósł|wzrósł\s+(?:jedynie\s+)?nieznaczn\w*"),
+    # ("nieznacznie_podniesiony", r"(?:jedynie\s+)?nieznaczn\w*\s+wzrósł|wzrósł\s+(?:jedynie\s+)?nieznaczn\w*"),
 
-    # ogólny trend/wzrost (bardzo słaby sygnał → często tylko pomocniczy)
-    ("podniesiony", r"wzrostow\w*|wzrast\w*|wzrósł|wzrosł\w*|rosnąc\w*|przyrost\w*"),
+    # # ogólny trend/wzrost (bardzo słaby sygnał → często tylko pomocniczy)
+    # ("podniesiony", r"wzrostow\w*|wzrast\w*|wzrósł|wzrosł\w*|rosnąc\w*|przyrost\w*"),
 
     ("znacznie_podniesiony", r"\b(znacznie|wyraźnie|istotnie)\b.*\b(podnies|podwyższ)\w*"),
     ("znacznie_obniżony",    r"\b(znacznie|wyraźnie|istotnie)\b.*\bobniż\w*"),
@@ -516,3 +519,87 @@ STATUS_SCORE = {
     "powyżej_dopuszczalnego_limitu": 95,
     "poza_dopuszczalnym_zakresem": 96,
 }
+
+
+
+#### TRENDS
+
+TREND_WORD = r"\btrend\w*\b"
+
+TREND_STATUS_RULES = [
+    # brak możliwości oceny trendu
+    (
+        "nieoznaczono",
+        r"(?:"
+        r"brak\s+(?:wartości|wyników)\s+historycznych\s+uniemożliwia(?:\s+jednak)?\s+ocenę\s+trend\w*"
+        r"|uniemożliwia(?:\s+jednak)?\s+ocenę\s+trend\w*"
+        r")",
+    ),
+
+    # stabilny / norma / bez zmian
+    (
+        "w_normie",
+        r"(?:"
+        r"trend\w*(?:\s+[\wąćęłńóśźż]+\s+i\s+[\wąćęłńóśźż]+)?\s+(?:jednak\s+)?(?:jest\s+)?stabiln\w*"
+        r"|stabiln\w*\s+trend\w*"
+        r"|trend\w*\s+(?:jest\s+)?w\s+normie"
+        r"|trend\w*\s+(?:mieści\s+się\s+)?w\s+granicach\s+normy"
+        r"|trend\w*\s+w\s+(?:zakresie|przedziale)\s+(?:typowym|bezpiecznym|akceptowalnym|dopuszczalnym)"
+        r"|w\s+trendzie\s+stał\w*"
+        r"|trend\w*\s+stał\w*"
+        r"|trend\w*\s+utrzymuje\s+się\s+na\s+tym\s+samym\s+poziomie"
+        r"|utrzymuje\s+się\s+na\s+tym\s+samym\s+poziomie"
+        r"|na\s+tym\s+samym\s+poziomie\s+jak\s+w\s+badaniu\s+poprzednim"
+        r"|przebieg\s+trend\w*.*?stabiln\w*"
+        r")",
+    ),
+
+    # trend wzrostowy — wskazówka
+    (
+        "wzrostowy",
+        r"(?:"
+        r"trend\w*\s+(?:jest\s+)?(?:jednak\s+)?(?:wyraźnie\s+)?(?:wzrostow\w*|wzrosto\w*|rosnąc\w*)"
+        r"|(?:wzrostow\w*|wzrosto\w*|rosnąc\w*)\s+trend\w*"
+        r"|w\s+trendzie\s+(?:wzrostow\w*|rosnąc\w*)"
+        r"|charakterystyce\s+trend\w*\s+poziom\s+(?:wzrostow\w*|wzrosto\w*)"
+        r"|na\s+charakterystyce\s+trend\w*\s+poziom\s+(?:wzrostow\w*|wzrosto\w*)"
+        r"|charakterystyce\s+trend\w*\s+widoczn\w*\s+stabiln\w*\s+wzrost"
+        r"|na\s+charakterystyce\s+trend\w*\s+widoczn\w*\s+stabiln\w*\s+wzrost"
+        r"|trend\w*.*?widoczn\w*\s+wzrost"
+        r"|w\s+badaniu\s+trend\w*\s+widoczn\w*\s+wzrost"
+        r"|(?:zawartość|poziom|wartość)?\s*.*?(?:wzrosł\w*|wzrósł\w*)\s+od\s+poprzedni\w*\s+(?:badani\w*|analiz\w*)"
+        r"|(?:zawartość|poziom|wartość)?\s*.*?(?:wzros\w*|wzrós\w*)\s+od\s+poprzedni\w*\s+(?:badani\w*|analiz\w*)"
+        r"|(?:zachowan\w*\s+)?dynamik\w*\s+przyrost\w*"
+        r"|przyrost\w+\s+(?:zawartości\s+|poziomu\s+|wartości\s+)?"
+        r")",
+    ),
+
+    # trend spadkowy — wskazówka
+    (
+        "spadkowy",
+        r"(?:"
+        r"trend\w*\s+(?:jest\s+)?(?:jednak\s+)?(?:wyraźnie\s+)?(?:spadkow\w*|malejąc\w*|opadając\w*)"
+        r"|(?:spadkow\w*|malejąc\w*|opadając\w*)\s+trend\w*"
+        r"|w\s+trendzie\s+(?:malejąc\w*|spadkow\w*|opadając\w*)"
+        r"|charakterystyce\s+trend\w*\s+poziom\s+(?:spadkow\w*|malejąc\w*|opadając\w*)"
+        r"|na\s+charakterystyce\s+trend\w*\s+poziom\s+(?:spadkow\w*|malejąc\w*|opadając\w*)"
+        r"|charakterystyce\s+trend\w*\s+widoczn\w*\s+stabiln\w*\s+spadek"
+        r"|na\s+charakterystyce\s+trend\w*\s+widoczn\w*\s+stabiln\w*\s+spadek"
+        r"|trend\w*.*?widoczn\w*\s+spadek"
+        r"|w\s+badaniu\s+trend\w*\s+widoczn\w*\s+spadek"
+        r")",
+    ),
+
+    # trend do obserwacji — nie jest normalny, ale bez jasnego kierunku
+    (
+        "do_obserwacji",
+        r"(?:"
+        r"obserwacj\w*\s+trend\w*"
+        r"|obserwować\s+trend\w*"
+        r"|obserwować\s+zmian\w*\s+trend\w*"
+        r"|zmian\w*\s+trend\w*"
+        r"|trend\w*\s+zmian"
+        r"|obserwację\s+trend\w*\s+zmian"
+        r")",
+    ),
+]

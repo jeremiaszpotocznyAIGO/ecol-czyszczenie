@@ -23,7 +23,10 @@ from parser.patterns import (
     STATUS_KIND,
     STATUS_SCORE,
     NEGATION_WHITELIST,
+    TREND_WORD,
+    TREND_STATUS_RULES,
 )
+
 from parser.utils import (
     safe_text,
     normalize_text,
@@ -39,6 +42,8 @@ warn_on_duplicate_status_rules(STATUS_RULES)
 PARAM_RE = compile_regex_map(PARAM_PATTERNS, flags=re.I)
 STATUS_RE = compile_rules(STATUS_RULES, flags=re.I)
 AUX_RE = compile_regex_map(AUX, flags=re.I)
+TREND_RE = re.compile(TREND_WORD, re.I)
+TREND_STATUS_RE = compile_rules(TREND_STATUS_RULES, flags=re.I)
 
 # --- splitowanie klauzul ---
 CLAUSE_SPLIT = r"[.\n;]+"
@@ -209,6 +214,22 @@ def global_ok_status(matched_text: str) -> str:
     return "w_normie"
 
 
+def detect_trend_status(fragment: str) -> Optional[str]:
+    s = fragment.lower()
+    for name, pat in TREND_STATUS_RE:
+        if pat.search(s):
+            return name
+    return None
+
+
+def trend_key(param: str) -> str:
+    """
+    Tworzy nazwę klucza trendowego.
+    Np. miedź -> trend_miedź
+    """
+    return f"trend_{param}"
+
+
 # Parser diagnostyczny
 class DiagnosisParser:
     def parse(self, text: str) -> dict[str, str]:
@@ -324,11 +345,71 @@ class RecommendationsParser:
         return {}
 
 
+class TrendParser:
+    """
+    Parser trendów.
+
+    Zwraca płaski słownik:
+    {
+        "trend_miedź": "wzrostowy",
+        "trend_sód": "spadkowy",
+        "trend_metale_zużyciowe": "w_normie",
+    }
+    """
+
+    def parse(self, text: str) -> dict[str, str]:
+        text = normalize_text(safe_text(text))
+        if not text:
+            return {}
+
+        result: dict[str, str] = {}
+        clauses = split_clauses(text)
+
+        last_params: list[str] = []
+
+        for clause in clauses:
+            cl = clause.lower()
+
+            found = find_params(clause)
+            params = [p for p, _, _ in found if p != "ft_ir"]
+
+            if params:
+                last_params = params
+
+            trend_status = detect_trend_status(cl)
+
+            if not trend_status:
+                continue
+
+            # 1. Parametry bezpośrednio w klauzuli z trendem
+            target_params = params.copy()
+
+            # 2. Jeśli klauzula zawiera trend, ale nie zawiera parametru,
+            #    przypisz do ostatnich parametrów z poprzedniej klauzuli.
+            #    Przykład:
+            #    "Poziom miedzi lekko podniesiony, trend wzrostowy"
+            if not target_params and last_params:
+                target_params = last_params.copy()
+
+            # 3. Jeżeli dalej nie wiadomo czego dotyczy trend,
+            #    można zapisać ogólny trend.
+            if not target_params:
+                result["trend_ogólny"] = trend_status
+                continue
+
+            for param in target_params:
+                result[trend_key(param)] = trend_status
+
+        return result
+
+
+
 # Orkiestracja: segmentacja + 2 parsery
 class OilCommentParser:
     def __init__(self) -> None:
         self.segmenter = CommentSegmenter()
         self.diagnosis_parser = DiagnosisParser()
+        self.trend_parser = TrendParser()
         self.reco_parser = RecommendationsParser()
 
     def parse_full(self, text: str) -> dict:
@@ -339,6 +420,7 @@ class OilCommentParser:
         sections = self.segmenter.split(text)
 
         diagnosis_struct = self.diagnosis_parser.parse(sections.diagnosis)
+        trend_struct = self.trend_parser.parse(sections.diagnosis)
         reco_struct = self.reco_parser.parse(sections.recommendations)
 
         return {
@@ -347,6 +429,7 @@ class OilCommentParser:
                 "recommendations": sections.recommendations,
             },
             "diagnosis": diagnosis_struct,
+            "trends": trend_struct,
             "recommendations": reco_struct,
             "meta": {
                 "cut_found": sections.cut_found,
@@ -356,10 +439,20 @@ class OilCommentParser:
 
     def parse_flat(self, text: str) -> dict[str, str]:
         """
-        zachowuje stare zachowanie parse_comment() -> zwraca tylko diagnozę (bez analizy zaleceń i wniosków)
+        Zwraca płaski słownik:
+        - zwykłe parametry diagnostyczne
+        - trend_<parametr>
         """
         full = self.parse_full(text)
-        return full.get("diagnosis", {}) if full else {}
+        if not full:
+            return {}
+
+        out = {}
+        out.update(full.get("diagnosis", {}))
+        out.update(full.get("trends", {}))
+
+        return out
+
 
 
 # Globalna instancja (żeby nie kompilować regexów / nie tworzyć klas w pętli)
