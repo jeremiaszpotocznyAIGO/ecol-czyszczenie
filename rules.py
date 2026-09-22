@@ -1,6 +1,5 @@
 import re
 
-
 # Wspólne domyślne zbiory
 DEFAULT_GLOBAL_KEYS = {"wszystkie_parametry", "oznaczone_parametry", "pozostałe_parametry"}
 
@@ -91,11 +90,10 @@ def get_potential_guidelines(
     df,
     assessment_col="Overall_Assessment_pred_file",
     text_col="Overall_Interpretation",
-    expected_class=1,
     suspicious_classes=(0, 2),
     # progi
-    min_borderline_params=1,      # ile "lekko/granicznie" minimalnie
-    min_total_params=3,           # żeby wykluczyć puste/przypadkowe
+    min_borderline_params=1,
+    min_total_params=3,
     ok_to_borderline_ratio=1.0,   # ok_count >= ratio * borderline_count (1.0 = "co najmniej tyle samo OK co borderline")
     require_softening_phrase=False,  # jeśli True -> wymaga frazy typu "jednak mieści się"
     # co ignorujemy
@@ -119,7 +117,6 @@ def get_potential_guidelines(
         "w_akceptowalnym_zakresie",
         "w_zakresie_dopuszczalnym",
         "w_zakresie_akceptowalnym",
-        "w_zakresie_granicznym",  # często borderline, ale tu liczymy jako OK tylko w proporcjach; realnie wrzucimy do borderline poniżej
     }
 
     # borderline / lekkie
@@ -129,7 +126,7 @@ def get_potential_guidelines(
         "lekko_obniżony",
         "nieznacznie_podniesiony",
         "nieznacznie_obniżony",
-        "pogorszony",   # jeśli u Ciebie "pogorszony" to raczej 1; "mocno_pogorszony" jest w mocnych
+        "pogorszony", 
         "nieznacznie_odbiega",
     }
 
@@ -146,11 +143,9 @@ def get_potential_guidelines(
         "poza_dopuszczalnym_zakresem",
         "powyżej_typowego",
         "poniżej_typowego",
-        # jeśli chcesz, możesz tu dodać też: "podniesiony", "obniżony"
-        # ale na razie zostawiam jako "średnie" (bo bywa semantycznie łagodne w opisach)
     }
 
-    # --- frazy "łagodzące" / borderline ---
+    # frazy "łagodzące" / borderline
     SOFTENING_RE = re.compile(
         r"(?:\bjednak\b|\bale\b|\bpomimo\b|\bmimo\b|\baczkolwiek\b|"
         r"mieści\s+się|wciąż\s+mieści\s+się|jeszcze\s+w\s+(?:dopuszczalnym|akceptowalnym|bezpiecznym)\s+"
@@ -198,8 +193,6 @@ def get_potential_guidelines(
                 ok_cnt += 1
                 continue
 
-            # wszystko inne traktujemy jako "średnie" -> podbija total, ale nie ok/borderline
-            # (np. "podniesiony" / "obniżony" możesz później wrzucić do STRONG, jeśli chcesz ostrzej)
             pass
 
         if total_cnt < min_total_params:
@@ -214,7 +207,6 @@ def get_potential_guidelines(
         if require_softening_phrase:
             return bool(SOFTENING_RE.search(str(text or "")))
 
-        # jeśli nie wymagamy frazy, to i tak warto ją traktować jako “bonus” (nie jako warunek)
         return True
 
     out = []

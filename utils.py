@@ -7,7 +7,7 @@ def labs_to_review_json(
     parsed_data,
     text_col="Overall_Interpretation",
     pred_col="Prediction",
-    gt_col="Overall_Assessment_x",
+    gt_col="Overall_Assessment_data",
 ):
     """
     {
@@ -53,7 +53,7 @@ def labs_to_review_csv(
     parsed_data,
     text_col="Overall_Interpretation",
     pred_col="Prediction",
-    gt_col="Overall_Assessment_x",
+    gt_col="Overall_Assessment_data",
 ):
     """
     Returns a dataframe with columns:

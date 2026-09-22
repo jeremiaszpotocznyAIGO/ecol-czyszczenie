@@ -82,7 +82,7 @@ FEATURE_COLS = [
     "Fuel_content",
     "Dispersing_properties"]
 
-# # Mapowanie nazwa angielskich do polskich
+# # Mapowanie nazw angielskich do polskich
 # FEATURE_DICT = {
 #     "Capacity": "pojemność",
 #     "Top_Up_Since_Last_Change": "dolewki_od_ostatniej_wymiany",

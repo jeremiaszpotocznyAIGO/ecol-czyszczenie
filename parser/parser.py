@@ -16,6 +16,10 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
+import json
+import pandas as pd
+
+
 from parser.patterns import (
     PARAM_PATTERNS,
     AUX,
@@ -388,3 +392,101 @@ def df_to_json(df, start: int, end: int) -> dict:
         text = df["Overall_Interpretation"][i]
         out[lab] = parse_comment(text)
     return out
+
+
+
+def parser_quantifier(
+    parser_output,
+    feature_to_pattern,
+    status_to_abnormality,
+    return_df=True,
+    fill_missing=None,
+    keep_none=False,
+):
+    """
+    Zamienia wynik parsera:
+        {
+          "P1300010": {"lepkość": "w_normie", "liczba_zasadowa": "w_zakresie_bezpiecznym"},
+          ...
+        }
+
+    na:
+        {
+          "P1300010": {
+              "Kinematic_viscosity_at_40C": 0.0,
+              "Kinematic_viscosity_at_100C": 0.0,
+              "Base_number": 0.0,
+              ...
+          },
+          ...
+        }
+
+    Parametry
+    ----------
+    parser_output : dict | str
+        Albo już wczytany dict, albo ścieżka do pliku json.
+    feature_to_pattern : dict
+        Mapowanie FEATURE_COL -> klucz parsera, np.
+        {"Kinematic_viscosity_at_40C": "lepkość", ...}
+    status_to_abnormality : dict
+        Mapowanie status -> liczba abnormalności, np.
+        {"w_normie": 0.0, "lekko_podniesiony": 0.5, ...}
+    return_df : bool
+        Czy zwrócić również DataFrame.
+    fill_missing : float | None
+        Wartość do wpisania dla kolumn niewystępujących po mapowaniu.
+        Jeśli None, brakujące kolumny nie są dopisywane.
+    keep_none : bool
+        Jeśli False, statusy mapujące się na None są pomijane.
+        Jeśli True, zostają wpisane jako None.
+
+    Zwraca
+    -------
+    quantified_dict : dict
+    quantified_df : pd.DataFrame (jeśli return_df=True)
+    """
+    # 1) wczytanie jeśli podano ścieżkę
+    if isinstance(parser_output, str):
+        with open(parser_output, "r", encoding="utf-8") as f:
+            parser_output = json.load(f)
+
+    # 2) odwrócenie mapowania:
+    #    parser_key -> lista kolumn FEATURE_COLS
+    pattern_to_features = {}
+    for feature_col, parser_key in feature_to_pattern.items():
+        pattern_to_features.setdefault(parser_key, []).append(feature_col)
+
+    quantified = {}
+
+    for sample_id, parsed_params in parser_output.items():
+        sample_result = {}
+
+        for parser_key, status in parsed_params.items():
+            # jeśli parser zwrócił klucz, którego nie mamy w mapowaniu -> pomijamy
+            if parser_key not in pattern_to_features:
+                continue
+
+            abnormality = status_to_abnormality.get(status, None)
+
+            # jeśli status nieznany lub celowo None i nie chcemy go trzymać
+            if abnormality is None and not keep_none:
+                continue
+
+            for feature_col in pattern_to_features[parser_key]:
+                sample_result[feature_col] = abnormality
+
+        # opcjonalne wypełnienie braków
+        if fill_missing is not None:
+            for feature_col in feature_to_pattern.keys():
+                sample_result.setdefault(feature_col, fill_missing)
+
+        quantified[sample_id] = sample_result
+
+    if not return_df:
+        return quantified
+
+    quantified_df = pd.DataFrame.from_dict(quantified, orient="index")
+    quantified_df.index.name = "sample_id"
+    quantified_df = quantified_df.sort_index(axis=1)
+
+    return quantified, quantified_df
