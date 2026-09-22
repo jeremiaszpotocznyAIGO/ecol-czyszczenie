@@ -65,7 +65,7 @@ class CommentSegmenter:
     """
     def __init__(self) -> None:
         # korzysta z konfiguracji z patterns.AUX
-        # (jeśli nie ma, fallback na Twoje dotychczasowe nagłówki)
+        # (jeśli nie ma, fallback na dotychczasowe nagłówki)
         pat = AUX.get("SECTION_CUT_HEADERS") or r"\b(?:wnioski\s+i\s+zalecenia|zalecenia\s+i\s+wnioski)\b"
         self._cut_re = re.compile(pat, re.I)
 

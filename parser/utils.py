@@ -4,7 +4,7 @@ from __future__ import annotations
 import math
 import re
 
-# optional (parser działa też bez pandas)
+# optional (sam parser działa też bez pandas)
 try:
     import pandas as pd
 except Exception:
